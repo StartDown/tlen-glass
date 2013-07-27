@@ -4,6 +4,7 @@ import com.github.kevinsawicki.http.HttpRequest;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,15 +14,15 @@ import java.util.regex.Pattern;
 public class ImageProcessingUtil {
 
     private static final Pattern imagePattern = Pattern.compile("href=\"(.*)\"");
+    private static final Random random = new Random();
 
-    public static String tlenifyImage(final int bgNum, final String imageUrl) {
+    public static String tlenifyImage(final InputStream is) {
 
-        byte[] image = HttpRequest.get(imageUrl).bytes();
+        final int bgNum = random.nextInt(3)+1;
 
         HttpRequest request = HttpRequest.post("http://tlenta.ru/tlenify.php");
         request.part("MAX_FILE_SIZE", "2000000");
 
-        InputStream is = new ByteArrayInputStream(image);
         request.part("img", "foobar.jpg", "image/jpeg", is);
         request.part("fon", bgNum);
         request.part("txt", "");
