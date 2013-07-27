@@ -101,7 +101,7 @@ public class MainServlet extends HttpServlet {
       message = "Application has been unsubscribed.";
 
     } else if (req.getParameter("operation").equals("insertItem")) {
-      LOG.fine("Inserting Timeline Item");
+      LOG.info("Inserting Timeline Item");
       TimelineItem timelineItem = new TimelineItem();
 
       if (req.getParameter("message") != null) {
@@ -120,7 +120,8 @@ public class MainServlet extends HttpServlet {
         MirrorClient.insertTimelineItem(credential, timelineItem);
       }
 
-      message = "A timeline item has been inserted.";
+      message = "A timeline has been inserted.dsfdf " + timelineItem.getText();
+      LOG.info("A timeline item has been inserted " + timelineItem.getText());
 
     } else if (req.getParameter("operation").equals("insertItemWithAction")) {
       LOG.fine("Inserting Timeline Item");

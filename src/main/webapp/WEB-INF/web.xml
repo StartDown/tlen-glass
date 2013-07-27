@@ -40,6 +40,15 @@ limitations under the License.
     <url-pattern>/main</url-pattern>
   </servlet-mapping>
 
+    <servlet>
+        <servlet-name>tlen</servlet-name>
+        <servlet-class>com.google.glassware.TlenImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>tlen</servlet-name>
+        <url-pattern>/tlen</url-pattern>
+    </servlet-mapping>
+
   <servlet>
     <servlet-name>oauth2callback</servlet-name>
     <servlet-class>com.google.glassware.AuthServlet</servlet-class>
