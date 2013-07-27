@@ -33,6 +33,13 @@ limitations under the License.
   </repositories>
 
   <dependencies>
+
+      <dependency>
+          <groupId>com.github.kevinsawicki</groupId>
+          <artifactId>http-request</artifactId>
+          <version>5.4</version>
+      </dependency>
+
     <!-- Java Google API Client Library -->
     <dependency>
       <groupId>com.google.apis</groupId>
