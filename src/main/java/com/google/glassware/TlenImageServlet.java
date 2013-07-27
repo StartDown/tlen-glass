@@ -38,21 +38,22 @@ public class TlenImageServlet extends HttpServlet {
                 URL url = new URL(req.getParameter("imageUrl"));
                 final String contentType = req.getParameter("contentType");
 
+                LOG.info("tlenify image : " + url.toString());
                 ImageProcessingUtil.tlenifyImage(3, url.toString(), new ImageProcessingUtil.TlenCallback() {
                     @Override
                     public void tlen(String imageUrl) {
                         try {
+                            LOG.info("tlen finished : " + imageUrl);
                             URL tlenUrl = new URL(imageUrl);
                             MirrorClient.insertTimelineItem(credential, timelineItem, contentType, tlenUrl.openStream());
                         } catch (MalformedURLException e) {
-                            e.printStackTrace();
+                            LOG.info(e.getMessage());
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            LOG.info(e.getMessage());
                         }
                     }
                 });
 
-                MirrorClient.insertTimelineItem(credential, timelineItem, contentType, url.openStream());
             } else {
                 MirrorClient.insertTimelineItem(credential, timelineItem);
             }
