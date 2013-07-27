@@ -19,6 +19,8 @@ limitations under the License.
 <%@ page import="com.google.glassware.WebUtil" %>
 <%@ page
     import="java.util.List" %>
+<%@ page import="java.util.logging.Logger" %>
+
 <%@ page import="com.google.api.services.mirror.model.TimelineItem" %>
 <%@ page import="com.google.api.services.mirror.model.Subscription" %>
 <%@ page import="com.google.api.services.mirror.model.Attachment" %>
@@ -123,6 +125,26 @@ limitations under the License.
           if (timelineItem.getAttachments() != null) {
             for (Attachment attachment : timelineItem.getAttachments()) {
               if (MirrorClient.getAttachmentContentType(credential, timelineItem.getId(), attachment.getId()).startsWith("")) { %>
+
+               <form action="<%= WebUtil.buildUrl(request, "/tlen") %>" method="post">
+                      <input type="hidden" name="operation" value="insertItem">
+
+                      <input type="hidden" name="attachmentId" value="<%= attachment.getId() %>">
+
+                      <input type="hidden" name="timelineItemId" value="<%= timelineItem.getId() %>">
+
+                      <input type="hidden" name="imageUrl" value="<%= appBaseUrl + "attachmentproxy?attachment=" +
+                                              attachment.getId() + "&timelineItem=" + timelineItem.getId() %>">
+                      <input type="hidden" name="contentType" value="image/jpeg">
+
+                      <button class="btn" type="submit">Tlen a picture
+                        <img class="button-icon" src="<%= appBaseUrl + "attachmentproxy?attachment=" +
+                                                    attachment.getId() + "&timelineItem=" + timelineItem.getId() %>">
+                      </button>
+                    </form>
+
+
+                <li><strong>there is an image : <%= timelineItem.getId() %> </strong></li>
           <img src="<%= appBaseUrl + "attachmentproxy?attachment=" +
             attachment.getId() + "&timelineItem=" + timelineItem.getId() %>">
           <% } else { %>
