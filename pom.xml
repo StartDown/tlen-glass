@@ -22,6 +22,8 @@ limitations under the License.
   <version>0.1-SNAPSHOT</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <appengine.app.version>1</appengine.app.version>
+      <appengine.target.version>1.8.0</appengine.target.version>
   </properties>
 
   <repositories>
@@ -38,6 +40,12 @@ limitations under the License.
           <groupId>com.github.kevinsawicki</groupId>
           <artifactId>http-request</artifactId>
           <version>5.4</version>
+      </dependency>
+
+      <dependency>
+          <groupId>com.google.appengine</groupId>
+          <artifactId>appengine-api-1.0-sdk</artifactId>
+          <version>${appengine.target.version}</version>
       </dependency>
 
     <!-- Java Google API Client Library -->
@@ -132,6 +140,15 @@ limitations under the License.
           <target>1.6</target>
         </configuration>
       </plugin>
+
+
+        <plugin>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-maven-plugin</artifactId>
+            <version>${appengine.target.version}</version>
+        </plugin>
     </plugins>
   </build>
+
+
 </project>
