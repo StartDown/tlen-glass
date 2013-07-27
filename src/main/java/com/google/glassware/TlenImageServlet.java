@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Logger;
@@ -30,30 +31,27 @@ public class TlenImageServlet extends HttpServlet {
             LOG.info("Inserting tlen item");
             final TimelineItem timelineItem = new TimelineItem();
 
-            // Triggers an audible tone when the timeline item is received
             timelineItem.setNotification(new NotificationConfig().setLevel("DEFAULT"));
 
             if (req.getParameter("imageUrl") != null) {
-                // Attach an image, if we have one
-                URL url = new URL(req.getParameter("imageUrl"));
+                String timelineItemId = req.getParameter("timelineItemId");
+                String attachmentId = req.getParameter("attachmentId");
+
+                LOG.info("timelineItemId : " + timelineItemId);
+                LOG.info("attachment id : " + attachmentId);
+
+                InputStream attachmentStream = MirrorClient
+                        .getAttachmentInputStream(credential, timelineItemId, attachmentId);
+
+//                URL url = new URL("http://cs6066.vk.me/u182884895/video/l_0ea74030.jpg");
                 final String contentType = req.getParameter("contentType");
 
-                LOG.info("tlenify image : " + url.toString());
-                ImageProcessingUtil.tlenifyImage(3, url.toString(), new ImageProcessingUtil.TlenCallback() {
-                    @Override
-                    public void tlen(String imageUrl) {
-                        try {
-                            LOG.info("tlen finished : " + imageUrl);
-                            URL tlenUrl = new URL(imageUrl);
-                            MirrorClient.insertTimelineItem(credential, timelineItem, contentType, tlenUrl.openStream());
-                        } catch (MalformedURLException e) {
-                            LOG.info(e.getMessage());
-                        } catch (IOException e) {
-                            LOG.info(e.getMessage());
-                        }
-                    }
-                });
+                LOG.info("tlenify image : " + req.getParameter("imageUrl"));
+                final String tlenImageUrlString = ImageProcessingUtil.tlenifyImage(attachmentStream);
+                LOG.info("tlenned image : " + tlenImageUrlString);
+                URL tlenImageUrl = new URL(tlenImageUrlString);
 
+                MirrorClient.insertTimelineItem(credential, timelineItem, contentType, tlenImageUrl.openStream());
             } else {
                 MirrorClient.insertTimelineItem(credential, timelineItem);
             }

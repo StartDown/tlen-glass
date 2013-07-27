@@ -128,6 +128,11 @@ limitations under the License.
 
                <form action="<%= WebUtil.buildUrl(request, "/tlen") %>" method="post">
                       <input type="hidden" name="operation" value="insertItem">
+
+                      <input type="hidden" name="attachmentId" value="<%= attachment.getId() %>">
+
+                      <input type="hidden" name="timelineItemId" value="<%= timelineItem.getId() %>">
+
                       <input type="hidden" name="imageUrl" value="<%= appBaseUrl + "attachmentproxy?attachment=" +
                                               attachment.getId() + "&timelineItem=" + timelineItem.getId() %>">
                       <input type="hidden" name="contentType" value="image/jpeg">
