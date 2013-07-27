@@ -12,33 +12,39 @@ import java.util.regex.Pattern;
  */
 public class ImageProcessingUtil {
 
-    static interface TlenCallback{
+    static interface TlenCallback {
         public void tlen(String imageUrl);
     }
 
     private static final Pattern imagePattern = Pattern.compile("href=\"(.*)\"");
 
-    public static void tlenifyImage(int bgNum, String imageUrl, TlenCallback callback) {
+    public static void tlenifyImage(final int bgNum, final String imageUrl, final TlenCallback callback) {
 
-        byte[] image = HttpRequest.get(imageUrl).bytes();
+        new Thread() {
 
-        HttpRequest request = HttpRequest.post("http://tlenta.ru/tlenify.php");
-        request.part("MAX_FILE_SIZE", "2000000");
+            public void run() {
 
-        InputStream is = new ByteArrayInputStream(image);
-        request.part("img", "foobar.jpg", "image/jpeg", is);
-        request.part("fon", bgNum);
-        request.part("txt", "");
-        if (request.ok()) {
-            String body = request.body();
-            Matcher matcher = imagePattern.matcher(body);
+                byte[] image = HttpRequest.get(imageUrl).bytes();
 
-            if(matcher.find()){
-                String url = matcher.group(1);
-                System.out.println(url);
-                callback.tlen(url);
+                HttpRequest request = HttpRequest.post("http://tlenta.ru/tlenify.php");
+                request.part("MAX_FILE_SIZE", "2000000");
+
+                InputStream is = new ByteArrayInputStream(image);
+                request.part("img", "foobar.jpg", "image/jpeg", is);
+                request.part("fon", bgNum);
+                request.part("txt", "");
+                if (request.ok()) {
+                    String body = request.body();
+                    Matcher matcher = imagePattern.matcher(body);
+
+                    if (matcher.find()) {
+                        String url = matcher.group(1);
+                        System.out.println(url);
+                        callback.tlen(url);
+                    }
+
+                }
             }
-
-        }
+        }.start();
     }
 }
