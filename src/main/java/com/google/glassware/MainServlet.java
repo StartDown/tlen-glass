@@ -68,7 +68,7 @@ public class MainServlet extends HttpServlet {
   }
 
   private static final Logger LOG = Logger.getLogger(MainServlet.class.getSimpleName());
-  public static final String CONTACT_NAME = "Java Quick Start";
+  public static final String CONTACT_NAME = "Tlenify Glass";
 
   /**
    * Do stuff when buttons on index.jsp are clicked
