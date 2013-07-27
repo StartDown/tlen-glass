@@ -57,10 +57,14 @@ public class NewUserBootstrapper {
     LOG.info("Bootstrapper inserted contact " + insertedContact.getId() + " for user " + userId);
 
     try {
+
+        Subscription subscription =
+                MirrorClient.insertSubscription(credential, "https://glass-tlen.jelastic.neohost.net/notify", userId,
+                        "timeline");
       // Subscribe to timeline updates
-      Subscription subscription =
-          MirrorClient.insertSubscription(credential, WebUtil.buildUrl(req, "/notify"), userId,
-              "timeline");
+//      Subscription subscription =
+//          MirrorClient.insertSubscription(credential, WebUtil.buildUrl(req, "/notify"), userId,
+//              "timeline");
       LOG.info("Bootstrapper inserted subscription " + subscription
           .getId() + " for user " + userId);
     } catch (GoogleJsonResponseException e) {
