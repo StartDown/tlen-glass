@@ -46,13 +46,13 @@ public class AuthUtil {
    * Creates and returns a new {@link AuthorizationCodeFlow} for this app.
    */
   public static AuthorizationCodeFlow newAuthorizationCodeFlow() throws IOException {
-    FileInputStream authPropertiesStream =
-        new FileInputStream("./src/main/resources/oauth.properties");
-    Properties authProperties = new Properties();
-    authProperties.load(authPropertiesStream);
+//    FileInputStream authPropertiesStream =
+//        new FileInputStream("./oauth.properties");
+//    Properties authProperties = new Properties();
+//    authProperties.load(authPropertiesStream);
 
-    String clientId = authProperties.getProperty("client_id");
-    String clientSecret = authProperties.getProperty("client_secret");
+    String clientId = "756593757755.apps.googleusercontent.com";
+    String clientSecret = "zCC8-9I7Kn0R0qxrcxhv8kIo";
 
     return new GoogleAuthorizationCodeFlow.Builder(new NetHttpTransport(), new JacksonFactory(),
         clientId, clientSecret, Collections.singleton(GLASS_SCOPE)).setAccessType("offline")
