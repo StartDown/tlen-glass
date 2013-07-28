@@ -1,4 +1,6 @@
-Tlen Glass
+# Tlen Glass
+
+Tlenify your photos from Google Glass
 
 ## License
 Code for this project is licensed under [APL 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
